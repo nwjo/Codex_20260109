@@ -1,0 +1,64 @@
+geometry:
+  length: 0.1
+  area: 0.006
+  void_fraction: 0.6836
+  surface_area: 1500.0
+  catalyst_area: 26895.0
+  hydraulic_diameter: 0.0012124
+  rho_g: 2500.0
+  rho_s: 2500.0
+  cp_s_coeffs:
+    a: 1071.0
+    b: 0.156
+    c: -3.435e7
+  lambda_s: 1.675
+species:
+  names: [CO, O2, CO2, C3H6, CH4, H2, H2O, NO, N2]
+  hc_weights:
+    C3H6: 1.0
+    CH4: 1.0
+kinetics:
+  k0: [1.0e5, 8.0e4, 7.0e4, 6.0e4, 4.0e4, 3.5e4, 3.0e4, 1.2e5, 1.0e5, 9.0e4]
+  ea: [78000, 82000, 80000, 76000, 70000, 90000, 88000, 75000, 83000, 79000]
+  ka: [1.0e-3, 1.0e-3, 5.0e-4, 2.0e-4, 1.0e-3]
+  dha: [52000, 51000, 48000, 45000, 50000]
+  dh_reactions: [-280000, -300000, -260000, -250000, -41000, -72000, -55000, -120000, -160000, -70000]
+  kp_params:
+    a: 0.5
+    b: -1200.0
+transfer:
+  nu1: 3.0
+  sh1: 3.0
+  combiner: max
+  power: 4.0
+  x_min: 1.0e-6
+solver:
+  nx: 51
+  dt: 0.05
+  t_final: 0.5
+  outer_max_iter: 20
+  outer_tol: 1.0e-3
+  axial_relax: 0.7
+  newton_max_iter: 25
+  newton_tol: 1.0e-8
+  newton_damping: 0.6
+  initial_solid_temp: 300.0
+inlet:
+  temperature: 600.0
+  pressure: 101300.0
+  mass_flow: 0.04
+  composition:
+    CO: 0.02
+    O2: 0.05
+    CO2: 0.0
+    C3H6: 0.00045
+    CH4: 0.00005
+    H2: 0.00667
+    H2O: 0.0
+    NO: 0.0005
+    N2: 0.92233
+boundaries:
+  solid:
+    type: adiabatic
+output:
+  directory: output
