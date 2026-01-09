@@ -74,6 +74,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "newton_tol": 1.0e-8,
         "newton_damping": 0.5,
         "marcher": "upwind",
+        "initial_solid_temp": None,
     },
     "inlet": {
         "temperature": 500.0,

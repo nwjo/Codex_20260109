@@ -292,7 +292,10 @@ class OneChannelSolver:
         x = np.linspace(0.0, self.geometry["length"], nx)
         dx = x[1] - x[0]
         times = np.arange(0.0, t_final + dt, dt)
-        t_s = np.full((len(times), nx), self.inlet["temperature"])
+        t_s_init = self.solver.get("initial_solid_temp")
+        if t_s_init is None:
+            t_s_init = self.inlet["temperature"]
+        t_s = np.full((len(times), nx), t_s_init)
         t_g = np.zeros_like(t_s)
         c_g = np.zeros((len(times), nx, self.n_species))
         c_s = np.zeros_like(c_g)
