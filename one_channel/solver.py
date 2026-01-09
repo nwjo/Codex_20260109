@@ -170,16 +170,23 @@ class OneChannelSolver:
             r_i = self.kinetics.species_rates(c_s, t_s, t_g)
             return a * r_i - factor * km * s * (c_g - c_s)
 
-        c_s, iters = damped_newton(
-            residual,
-            np.clip(c_g.copy(), *bounds),
-            self.solver["newton_tol"],
-            self.solver["newton_max_iter"],
-            self.solver["newton_damping"],
-            self.solver["newton_damping_min"],
-            self.solver["newton_backtrack"],
-            bounds,
-        )
+        try:
+            c_s, iters = damped_newton(
+                residual,
+                np.clip(c_g.copy(), *bounds),
+                self.solver["newton_tol"],
+                self.solver["newton_max_iter"],
+                self.solver["newton_damping"],
+                self.solver["newton_damping_min"],
+                self.solver["newton_backtrack"],
+                bounds,
+            )
+        except NewtonError:
+            policy = self.solver.get("newton_fail_policy", "fallback")
+            if policy == "raise":
+                raise
+            c_s = np.clip(c_g.copy(), *bounds)
+            iters = self.solver["newton_max_iter"]
         rates = self.kinetics.rates(c_s, t_s, t_g)
         return c_s, rates, iters
 
