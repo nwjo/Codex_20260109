@@ -73,6 +73,8 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "newton_max_iter": 25,
         "newton_tol": 1.0e-8,
         "newton_damping": 0.5,
+        "newton_damping_min": 0.05,
+        "newton_backtrack": 8,
         "marcher": "upwind",
         "initial_solid_temp": None,
     },

@@ -77,6 +77,8 @@ def damped_newton(
     tol: float,
     max_iter: int,
     damping: float,
+    min_damping: float,
+    max_backtrack: int,
     bounds: Tuple[float, float],
 ) -> Tuple[np.ndarray, int]:
     x = x0.copy()
@@ -96,8 +98,20 @@ def damped_newton(
             dx = np.linalg.solve(jac, -fval)
         except np.linalg.LinAlgError as exc:
             raise NewtonError("Newton Jacobian solve failed") from exc
-        x = x + damping * dx
-        x = np.clip(x, lower, upper)
+        step = damping
+        accepted = False
+        for _ in range(max_backtrack):
+            x_trial = np.clip(x + step * dx, lower, upper)
+            trial_norm = np.linalg.norm(func(x_trial), ord=np.inf)
+            if trial_norm <= norm:
+                x = x_trial
+                accepted = True
+                break
+            step *= 0.5
+            if step < min_damping:
+                break
+        if not accepted:
+            x = np.clip(x + min_damping * dx, lower, upper)
     raise NewtonError("Newton solver did not converge")
 
 
@@ -162,6 +176,8 @@ class OneChannelSolver:
             self.solver["newton_tol"],
             self.solver["newton_max_iter"],
             self.solver["newton_damping"],
+            self.solver["newton_damping_min"],
+            self.solver["newton_backtrack"],
             bounds,
         )
         rates = self.kinetics.rates(c_s, t_s, t_g)
