@@ -75,6 +75,9 @@ An example YAML configuration is provided at:
 one_channel/examples/example_config.yaml
 ```
 
+Note: YAML treats unquoted `NO` as a boolean in some parsers; the example quotes `"NO"` to ensure it
+is parsed as a species name.
+
 ## Notes
 
 - Newton iteration diagnostics and outer-iteration counts are tracked in the solver result.

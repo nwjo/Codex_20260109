@@ -13,7 +13,7 @@ geometry:
     c: -3.435e7
   lambda_s: 1.675
 species:
-  names: [CO, O2, CO2, C3H6, CH4, H2, H2O, NO, N2]
+  names: [CO, O2, CO2, C3H6, CH4, H2, H2O, "NO", N2]
   hc_weights:
     C3H6: 1.0
     CH4: 1.0
@@ -55,7 +55,7 @@ inlet:
     CH4: 0.00005
     H2: 0.00667
     H2O: 0.0
-    NO: 0.0005
+    "NO": 0.0005
     N2: 0.92233
 boundaries:
   solid:
