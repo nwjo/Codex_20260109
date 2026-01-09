@@ -27,12 +27,18 @@ class KineticsModel:
     def __init__(self, config: KineticsConfig) -> None:
         self.config = config
         self.species_index = {name: idx for idx, name in enumerate(config.species)}
+        required = {"CO", "O2", "CO2", "C3H6", "CH4", "H2", "H2O", "NO", "N2"}
+        missing = sorted(required.difference(self.species_index))
+        if missing:
+            raise ValueError(f"Kinetics requires species entries: {missing}")
         self.stoich = self._build_stoich()
 
     def _build_stoich(self) -> np.ndarray:
         n_species = len(self.config.species)
         stoich = np.zeros((n_species, 10))
         def s(name: str, coeff: float, rxn: int) -> None:
+            if name not in self.species_index:
+                raise ValueError(f"Kinetics requires species entry '{name}' for reaction {rxn + 1}")
             stoich[self.species_index[name], rxn] = coeff
         s("CO", -1.0, 0)
         s("O2", -0.5, 0)
