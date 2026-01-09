@@ -277,10 +277,14 @@ class OneChannelSolver:
         lower = np.zeros(nx - 1)
         upper = np.zeros(nx - 1)
         coeff = lambda_s * (1 - epsilon) / dx**2
+        t_s_guess = np.asarray(t_s_guess, dtype=float)
         if callable(cp_s):
             cp_vals = cp_s(t_s_guess)
         elif cp_coeffs is not None:
-            cp_vals = cp_coeffs["a"] + cp_coeffs["b"] * t_s_guess + cp_coeffs["c"] / (t_s_guess**2)
+            a = float(cp_coeffs["a"])
+            b = float(cp_coeffs["b"])
+            c = float(cp_coeffs["c"])
+            cp_vals = a + b * t_s_guess + c / (t_s_guess**2)
         else:
             cp_vals = np.full_like(t_s_guess, 900.0 if cp_s is None else cp_s)
         storage = (1 - epsilon) * rho_s * cp_vals / dt
