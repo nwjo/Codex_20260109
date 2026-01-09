@@ -61,9 +61,6 @@ python -m one_channel.examples.run_transient
 
 Results are saved as NumPy arrays in the configured output directory.
 
-To set the initial solid temperature separately from the inlet gas temperature, specify
-`solver.initial_solid_temp` in the configuration (defaults to `inlet.temperature`).
-
 Solid heat capacity can be specified as a constant (`geometry.cp_s`) or as a coefficient set
 `geometry.cp_s_coeffs` using `a + b T_s + c / T_s^2` (SI units) to match common monolith fits.
 

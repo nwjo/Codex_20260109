@@ -74,7 +74,6 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "newton_tol": 1.0e-8,
         "newton_damping": 0.5,
         "marcher": "upwind",
-        "initial_solid_temp": None,
     },
     "inlet": {
         "temperature": 500.0,
@@ -114,8 +113,6 @@ REQUIRED_SECTIONS = {
     "output",
 }
 
-REQUIRED_SPECIES = {"CO", "O2", "CO2", "C3H6", "CH4", "H2", "H2O", "NO", "N2"}
-
 
 class ConfigError(ValueError):
     """Raised when configuration validation fails."""
@@ -139,9 +136,6 @@ def _validate_species(config: Mapping[str, Any]) -> None:
     names = config["species"]["names"]
     if len(set(names)) != len(names):
         raise ConfigError("Species names must be unique")
-    missing_required = sorted(REQUIRED_SPECIES.difference(names))
-    if missing_required:
-        raise ConfigError(f"Species list missing required entries: {missing_required}")
     inlet_comp = config["inlet"]["composition"]
     missing = [name for name in names if name not in inlet_comp]
     if missing:

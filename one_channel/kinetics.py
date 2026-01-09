@@ -27,10 +27,6 @@ class KineticsModel:
     def __init__(self, config: KineticsConfig) -> None:
         self.config = config
         self.species_index = {name: idx for idx, name in enumerate(config.species)}
-        required = {"CO", "O2", "CO2", "C3H6", "CH4", "H2", "H2O", "NO", "N2"}
-        missing = sorted(required.difference(self.species_index))
-        if missing:
-            raise ValueError(f"Kinetics requires species entries: {missing}")
         self.stoich = self._build_stoich()
 
     def _build_stoich(self) -> np.ndarray:
