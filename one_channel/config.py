@@ -106,6 +106,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
     },
     "output": {
         "directory": "output",
+        "plot_times": [],
     },
 }
 

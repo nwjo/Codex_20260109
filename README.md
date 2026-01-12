@@ -69,6 +69,9 @@ set `geometry.channels` to the total channel count (e.g., 2790 for 300 CPSI with
 frontal area) so the solver automatically uses `mass_flow / channels` for the
 single-channel calculation.
 
+If `output.plot_times` is provided, the example script will also save a wall-temperature
+profile plot in `output/png/wall_temperature_profiles.png`.
+
 Solid heat capacity can be specified as a constant (`geometry.cp_s`) or as a coefficient set
 `geometry.cp_s_coeffs` using `a + b T_s + c / T_s^2` (SI units) to match common monolith fits.
 

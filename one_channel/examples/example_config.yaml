@@ -35,8 +35,8 @@ transfer:
   x_min: 1.0e-6
 solver:
   nx: 51
-  dt: 0.05
-  t_final: 0.5
+  dt: 0.5
+  t_final: 300.0
   outer_max_iter: 20
   outer_tol: 1.0e-3
   axial_relax: 0.7
@@ -63,3 +63,4 @@ boundaries:
     type: adiabatic
 output:
   directory: output
+  plot_times: [15.7, 47.2, 71.8, 124.1, 300.0]
