@@ -29,6 +29,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "surface_area": 1500.0,
         "catalyst_area": 26895.0,
         "hydraulic_diameter": 1.2124e-3,
+        "channels": None,
         "rho_g": 2500.0,
         "rho_s": 2500.0,
         "cp_s_coeffs": {"a": 1071.0, "b": 0.156, "c": -3.435e7},

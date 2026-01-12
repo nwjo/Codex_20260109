@@ -64,6 +64,11 @@ Results are saved as NumPy arrays in the configured output directory.
 To set the initial solid temperature separately from the inlet gas temperature, specify
 `solver.initial_solid_temp` in the configuration (defaults to `inlet.temperature`).
 
+The model represents a single channel. If your inlet mass flow is for the full monolith,
+set `geometry.channels` to the total channel count (e.g., 2790 for 300 CPSI with 60 cm²
+frontal area) so the solver automatically uses `mass_flow / channels` for the
+single-channel calculation.
+
 Solid heat capacity can be specified as a constant (`geometry.cp_s`) or as a coefficient set
 `geometry.cp_s_coeffs` using `a + b T_s + c / T_s^2` (SI units) to match common monolith fits.
 

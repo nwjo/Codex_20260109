@@ -5,6 +5,7 @@ geometry:
   surface_area: 1500.0
   catalyst_area: 26895.0
   hydraulic_diameter: 0.0012124
+  channels: 2790
   rho_g: 2500.0
   rho_s: 2500.0
   cp_s_coeffs:

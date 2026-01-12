@@ -143,6 +143,9 @@ class OneChannelSolver:
     def _inlet_state(self, t: float) -> Tuple[float, np.ndarray, float]:
         temp = self.inlet["temperature"]
         flow = self.inlet["mass_flow"]
+        channels = self.geometry.get("channels")
+        if channels:
+            flow = flow / float(channels)
         comp = self.inlet["composition"]
         c_in = np.array([comp[name] for name in self.species], dtype=float)
         return temp, c_in, flow
