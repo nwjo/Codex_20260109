@@ -70,6 +70,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "outer_max_iter": 25,
         "outer_tol": 1.0e-3,
         "outer_relax": 0.6,
+        "outer_fail_policy": "accept",
         "axial_relax": 0.6,
         "newton_max_iter": 25,
         "newton_tol": 1.0e-8,

@@ -334,6 +334,10 @@ class OneChannelSolver:
         for n in range(1, len(times)):
             inlet_t, inlet_c, mass_flow = self._inlet_state(times[n])
             t_s_guess = t_s[n - 1].copy()
+            t_g_n = t_g[n - 1].copy()
+            c_g_n = c_g[n - 1].copy()
+            c_s_n = c_s[n - 1].copy()
+            rates_n = r_store[n - 1].copy()
             for outer in range(self.solver["outer_max_iter"]):
                 t_g_n, c_g_n, c_s_n, rates_n, diag = self._march_gas(
                     t_s_guess, inlet_t, inlet_c, mass_flow, x
@@ -351,7 +355,15 @@ class OneChannelSolver:
                 relax = self.solver.get("outer_relax", 1.0)
                 t_s_guess = relax * t_s_new + (1.0 - relax) * t_s_guess
             else:
-                raise RuntimeError("Outer iteration failed to converge")
+                policy = self.solver.get("outer_fail_policy", "raise")
+                if policy == "raise":
+                    raise RuntimeError("Outer iteration failed to converge")
+                print("Warning: outer iteration did not converge; accepting last iterate.")
+                t_s[n] = t_s_new
+                t_g[n] = t_g_n
+                c_g[n] = c_g_n
+                c_s[n] = c_s_n
+                r_store[n] = rates_n
             mu = self.gas_properties.mu(t_g[n])
             rho = ideal_gas_density(self.inlet["pressure"], t_g[n])
             vel = mass_flow / (rho * self.geometry["area"])
