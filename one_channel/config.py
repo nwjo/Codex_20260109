@@ -69,6 +69,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "t_final": 1.0,
         "outer_max_iter": 25,
         "outer_tol": 1.0e-3,
+        "outer_relax": 0.6,
         "axial_relax": 0.6,
         "newton_max_iter": 25,
         "newton_tol": 1.0e-8,
@@ -78,6 +79,7 @@ DEFAULT_CONFIG: Dict[str, Any] = {
         "newton_fail_policy": "fallback",
         "marcher": "upwind",
         "initial_solid_temp": None,
+        "temperature_clip": {"min": 250.0, "max": 2000.0},
     },
     "inlet": {
         "temperature": 500.0,

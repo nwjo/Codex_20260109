@@ -94,6 +94,7 @@ class KineticsModel:
         return hc
 
     def inhibition_terms(self, c_s: np.ndarray, t_s: float) -> tuple[float, float]:
+        t_s = float(np.clip(t_s, 250.0, 2000.0))
         k = self._adsorption_constants(t_s)
         c_co = c_s[self.species_index["CO"]]
         c_no = c_s[self.species_index["NO"]]

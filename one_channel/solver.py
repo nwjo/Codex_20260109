@@ -277,7 +277,9 @@ class OneChannelSolver:
         lower = np.zeros(nx - 1)
         upper = np.zeros(nx - 1)
         coeff = lambda_s * (1 - epsilon) / dx**2
+        temp_clip = self.solver.get("temperature_clip", {"min": 250.0, "max": 2000.0})
         t_s_guess = np.asarray(t_s_guess, dtype=float)
+        t_s_guess = np.clip(t_s_guess, temp_clip["min"], temp_clip["max"])
         if callable(cp_s):
             cp_vals = cp_s(t_s_guess)
         elif cp_coeffs is not None:
@@ -346,7 +348,8 @@ class OneChannelSolver:
                     diagnostics["outer_iters"].append(outer + 1)
                     diagnostics["newton_iters"].extend(diag["newton_iters"])
                     break
-                t_s_guess = t_s_new
+                relax = self.solver.get("outer_relax", 1.0)
+                t_s_guess = relax * t_s_new + (1.0 - relax) * t_s_guess
             else:
                 raise RuntimeError("Outer iteration failed to converge")
             mu = self.gas_properties.mu(t_g[n])
